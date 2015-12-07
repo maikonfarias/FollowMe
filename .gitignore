@@ -1,0 +1,13 @@
+FollowMeGame/Temp/
+FollowMeGame/Library/
+FollowMeGame/Obj/
+FollowMeGame/.vs/
+ 
+*.csproj
+*.unityproj
+*.sln
+*.user
+*.userprefs
+*.DS_store
+Thumbs.db.meta
+*.pfx
