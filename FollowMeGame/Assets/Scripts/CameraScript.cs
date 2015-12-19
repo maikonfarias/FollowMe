@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.SceneManagement;
 
 public class CameraScript : MonoBehaviour {
 
@@ -37,12 +38,13 @@ public class CameraScript : MonoBehaviour {
 
     if (!Game.isDead)
     {
-      if (Application.loadedLevel == 2)
+      //if (Application.loadedLevel == 2)
+      if (SceneManager.GetActiveScene().buildIndex == 2)
       {
         ShowScore();
       }
 
-      buttonPos = new Rect(0, Screen.height - buttonSize, buttonSize, buttonSize);
+      buttonPos = new Rect(0, Screen.height - buttonSize * 0.9f, buttonSize * 0.9f, buttonSize * 0.9f);
       
 
       GUI.DrawTexture(buttonPos, arrowLeftButton);
@@ -55,8 +57,13 @@ public class CameraScript : MonoBehaviour {
           didPress = true;
         }
       }
+      /*if (GUI.RepeatButton(buttonPos, "", new GUIStyle()))
+      {
+        Game.direction = -1;
+        didPress = true;
+      }*/
 
-      buttonPos = new Rect(buttonSize, Screen.height - buttonSize, buttonSize, buttonSize);
+      buttonPos = new Rect(buttonSize *1.2f, Screen.height - buttonSize * 0.9f, buttonSize * 0.9f, buttonSize * 0.9f);
 
       GUI.DrawTexture(buttonPos, arrowRightButton);
       for (int i = 0; i < Input.touchCount; ++i)
@@ -68,6 +75,11 @@ public class CameraScript : MonoBehaviour {
           didPress = true;
         }
       }
+      /*if (GUI.RepeatButton(buttonPos, "", new GUIStyle()))
+      {
+        Game.direction = 1;
+        didPress = true;
+      }*/
     }
     if (Input.GetKey(KeyCode.A))
     {
@@ -90,12 +102,12 @@ public class CameraScript : MonoBehaviour {
 
     if (GUI.Button(buttonPos, "", new GUIStyle()))
     {
-      Application.LoadLevel(0);
+      SceneManager.LoadScene(0);
     }
 
     if (!Game.isDead)
     {
-      buttonPos = new Rect((Screen.width) - (buttonSize * 0.9f), Screen.height - buttonSize * 0.9f, buttonSize * 0.7f, buttonSize * 0.7f);
+      buttonPos = new Rect( (buttonSize * 0.6f), Screen.height - buttonSize * 1.5f, buttonSize * 0.9f, buttonSize * 0.9f);
       GUI.DrawTexture(buttonPos, jumpButton);
 
       for (int i = 0; i < Input.touchCount; ++i)
@@ -109,6 +121,10 @@ public class CameraScript : MonoBehaviour {
           }
         }
       }
+      /*if (GUI.Button(buttonPos, "", new GUIStyle()))
+      {
+        Game.jump = true;
+      }*/
     }
     if (Input.GetKeyDown(KeyCode.Space))
     {
@@ -135,27 +151,27 @@ public class CameraScript : MonoBehaviour {
   private void ShowScore()
   {
     var buttonSize = Screen.height * 0.2f;
-    var letterWidth = buttonSize ;
-    var leterHeight = buttonSize;
+    var letterWidth = buttonSize * 0.9f;
+    var leterHeight = buttonSize * 0.9f;
     var marginTop = buttonSize * .1f;
 
-    var buttonPos = new Rect(marginTop, marginTop, buttonSize, buttonSize);
+    var buttonPos = new Rect(marginTop, marginTop, letterWidth, leterHeight);
     GUI.DrawTexture(buttonPos, flowerTexture);
 
-    buttonPos = new Rect(buttonSize, 0, buttonSize, buttonSize);
+    buttonPos = new Rect(letterWidth, 0, letterWidth, leterHeight);
     GUI.DrawTexture(buttonPos, colonTexture);
 
     string stringScore = Game.score.ToString();
     char[] letters = stringScore.ToCharArray();
     //Array.Reverse(letters);
 
-    float marginRight = buttonSize * 1f + letterWidth * 1;
+    float marginRight = letterWidth * 2;
     //GUI.DrawTexture(new Rect(marginRight - letterWidth * 6, marginTop, letterWidth * 6 + buttonSize * .3f, leterHeight + buttonSize * .13f), scoreFrameTexture);
     foreach (var letter in letters)
     {
       buttonPos = new Rect(marginRight, marginTop, letterWidth, leterHeight);
       GUI.DrawTexture(buttonPos, numbersTexture[(int)Char.GetNumericValue(letter)]);
-      marginRight += letterWidth;
+      marginRight += letterWidth*0.8f;
     }
   }
 

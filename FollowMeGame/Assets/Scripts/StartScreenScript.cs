@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class StartScreenScript : MonoBehaviour {
 
@@ -29,7 +30,7 @@ public class StartScreenScript : MonoBehaviour {
     if (GUI.Button(buttonPos, "", new GUIStyle()))
     {
       //Game.GetScreenFader().LoadScene(1, true);
-      Application.LoadLevel(1);
+      SceneManager.LoadScene(1);
     }
 
     /*buttonPos = new Rect((Screen.width / 2) + buttonSize * .5f, (Screen.height / 2) - buttonSize * .5f, buttonSize*3, buttonSize);

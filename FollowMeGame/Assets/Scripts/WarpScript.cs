@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class WarpScript : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class WarpScript : MonoBehaviour
     if (other.tag == "Player")
     {
       //Game.GetScreenFader().LoadScene(2);
-      Application.LoadLevel(2);
+      SceneManager.LoadScene(2);
     }
   }
 }
