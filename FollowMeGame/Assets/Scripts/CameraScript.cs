@@ -8,7 +8,10 @@ public class CameraScript : MonoBehaviour {
   public Texture2D arrowLeftButton;
   public Texture2D arrowRightButton;
   public Texture2D jumpButton;
-  public Texture2D exitButton;
+
+  public Texture2D exitENButton;
+  public Texture2D exitPTButton;
+  private Texture2D exitButton;
 
   public Texture2D deathAnimationTexture;
 
@@ -57,11 +60,14 @@ public class CameraScript : MonoBehaviour {
           didPress = true;
         }
       }
-      /*if (GUI.RepeatButton(buttonPos, "", new GUIStyle()))
+      if (Input.GetMouseButton(0))
       {
-        Game.direction = -1;
-        didPress = true;
-      }*/
+        if (buttonPos.Contains(new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y)))
+        {
+          Game.direction = -1;
+          didPress = true;
+        }
+      }
 
       buttonPos = new Rect(buttonSize *1.2f, Screen.height - buttonSize * 0.9f, buttonSize * 0.9f, buttonSize * 0.9f);
 
@@ -75,18 +81,22 @@ public class CameraScript : MonoBehaviour {
           didPress = true;
         }
       }
-      /*if (GUI.RepeatButton(buttonPos, "", new GUIStyle()))
+      if (Input.GetMouseButton(0))
       {
-        Game.direction = 1;
-        didPress = true;
-      }*/
+        if (buttonPos.Contains(new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y)))
+        {
+          Game.direction = 1;
+          didPress = true;
+        }
+      }
     }
-    if (Input.GetKey(KeyCode.A))
+
+    if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("Horizontal") < -0.3)
     {
       Game.direction = -1;
       didPress = true;
     }
-    else if (Input.GetKey(KeyCode.D))
+    else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) || Input.GetAxis("Horizontal") > 0.3)
     {
       Game.direction = 1;
       didPress = true;
@@ -97,10 +107,10 @@ public class CameraScript : MonoBehaviour {
       Game.direction = 0;
     }
 
-    buttonPos = new Rect((Screen.width) - (buttonSize*1.5f), 0, buttonSize * 2, buttonSize*0.5f);
+    buttonPos = new Rect((Screen.width) - (buttonSize*1.5f), 0, buttonSize * 2, buttonSize*0.6f);
     GUI.DrawTexture(buttonPos, exitButton);
 
-    if (GUI.Button(buttonPos, "", new GUIStyle()))
+    if (GUI.Button(buttonPos, "", new GUIStyle()) || Input.GetButton("Fire3"))
     {
       SceneManager.LoadScene(0);
     }
@@ -121,12 +131,16 @@ public class CameraScript : MonoBehaviour {
           }
         }
       }
-      /*if (GUI.Button(buttonPos, "", new GUIStyle()))
+      if (Input.GetMouseButton(0))
       {
-        Game.jump = true;
-      }*/
+        if(buttonPos.Contains(new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y)))
+        {
+          Game.jump = true;
+        }
+      }
+
     }
-    if (Input.GetKeyDown(KeyCode.Space))
+    if (Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetAxis("Vertical") > 0.3 || Input.GetButton("Jump"))
     {
       Game.jump = true;
     }
@@ -177,6 +191,15 @@ public class CameraScript : MonoBehaviour {
 
   void Update()
   {
+    if (Application.systemLanguage == SystemLanguage.Portuguese)
+    {
+      exitButton = exitPTButton;
+    }
+    else
+    {
+      exitButton = exitENButton;
+    }
+
     if (player)
     {
       if (player.position.x > -22 && player.position.x < 90.5)

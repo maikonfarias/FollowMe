@@ -3,19 +3,34 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class StartScreenScript : MonoBehaviour {
+  public Texture2D startENButton;
+  public Texture2D startPTButton;
+  public Texture2D exitENButton;
+  public Texture2D exitPTButton;
 
-  public Texture2D startButton;
+  private Texture2D startButton;
   public Texture2D optionsButton;
-  public Texture2D exitButton;
+  private Texture2D exitButton;
+
 
   void Start () {
 	
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	void Update ()
+  {
+    if (Application.systemLanguage == SystemLanguage.Portuguese)
+    {
+      startButton = startPTButton;
+      exitButton = exitPTButton;
+    }
+    else
+    {
+      startButton = startENButton;
+      exitButton = exitENButton;
+    }
+
+  }
 
   void OnGUI()
   {
@@ -27,7 +42,7 @@ public class StartScreenScript : MonoBehaviour {
     var buttonPos = new Rect((Screen.width / 2) + buttonSize * .5f, (Screen.height /2) - buttonSize*1f, buttonSize*3, buttonSize);
     GUI.DrawTexture(buttonPos, startButton);
 
-    if (GUI.Button(buttonPos, "", new GUIStyle()))
+    if (GUI.Button(buttonPos, "", new GUIStyle()) || Input.GetButton("Fire3"))
     {
       //Game.GetScreenFader().LoadScene(1, true);
       SceneManager.LoadScene(1);
