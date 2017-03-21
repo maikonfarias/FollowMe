@@ -158,7 +158,9 @@ public class CameraScript : MonoBehaviour {
 
     if (Game.isDead && deathAnimationTime > Time.time)
     {
+#if !UNITY_IOS
       GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), deathAnimationTexture);
+#endif
     }
   }
 
